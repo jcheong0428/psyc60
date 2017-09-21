@@ -15,3 +15,15 @@ In this lab we cover the basics of ssh logging into a cluster server and using a
 [Lab 04: Advanced methods (in prep)]
 
 [Lab 05: Other programs (in prep)]
+
+
+# Links to videos to help understand concepts of fMRI
+
+[Basic concept of fMRI & history](https://www.youtube.com/watch?v=djAxjtN_7VE)
+
+[Explanation of k-space and image through FT](https://www.youtube.com/watch?v=FI5frNsRTI4)
+
+# Other resources
+[http://mriquestions.com/index.html](http://mriquestions.com/index.html)
+
+[https://practicalfmri.blogspot.com/](https://practicalfmri.blogspot.com/)

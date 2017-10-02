@@ -27,3 +27,7 @@ In this lab we cover the basics of ssh logging into a cluster server and using a
 [http://mriquestions.com/index.html](http://mriquestions.com/index.html)
 
 [https://practicalfmri.blogspot.com/](https://practicalfmri.blogspot.com/)
+
+[Intro to MR physics with good figures](https://mrimaster.com/physics%20intro.html)
+
+[Explanation of MRI with good figures](https://www.researchgate.net/publication/49645994_Cardiovascular_magnetic_resonance_physics_for_clinicians_Part_I)

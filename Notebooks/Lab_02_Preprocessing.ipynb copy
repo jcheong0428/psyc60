@@ -49,7 +49,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [
     {
@@ -77,12 +77,7 @@
    "source": [
     "# Start matlab and SPM12\n",
     "\n",
-    "From the terminal inside your VNC session:\n",
-    "spm12\n",
-    "This will start matlab and load paths for SPM12\n",
-    "\n",
-    "To start SPM12:\n",
-    "spm fmri\n",
+    "Please refer to Lab 01 on how to do this part\n",
     "\n",
     "<img src=\"Images/Lab_02_SPM.png\"></img>"
    ]
@@ -142,20 +137,20 @@
     "\n",
     "We collected our slices in an interleaved manner, meaning that we collected the even slices first then odd slices, ie we collect slice 2 then 4 then 6... then go back and collect slice 1 then 3 then 5... \n",
     "\n",
-    "In the slice order box please enter the following exactly as shown here:\n"
+    "In the slice timing box please enter the following exactly as shown here:\n"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [
     {
      "ename": "SyntaxError",
-     "evalue": "invalid syntax (<ipython-input-4-04a8d8855a96>, line 1)",
+     "evalue": "invalid syntax (<ipython-input-2-04a8d8855a96>, line 1)",
      "output_type": "error",
      "traceback": [
-      "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-4-04a8d8855a96>\"\u001b[0;36m, line \u001b[0;32m1\u001b[0m\n\u001b[0;31m    [2:2:40 1:2:39]\u001b[0m\n\u001b[0m      ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+      "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-2-04a8d8855a96>\"\u001b[0;36m, line \u001b[0;32m1\u001b[0m\n\u001b[0;31m    [2:2:40 1:2:39]\u001b[0m\n\u001b[0m      ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
      ]
     }
    ],
@@ -200,34 +195,7 @@
     "\n",
     "All other standard options are fine. Save this Batch Editor file as Realignment.mat and run it.\n",
     "\n",
-    "If everything went well you should have files starting with ua* and a text file start with rp_ which has our motion.\n",
-    "\n",
-    "Load the motion data into matlab (go back to terminal where you started spm)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "cd('sub-sid000611/func')\n",
-    "motion=textread('rp_asub-sid000611_task-movie_acq-3mm_run-01_bold_0001.txt')\n",
-    "motion(:,4:6)=rad2deg(motion(:,4:6))\n",
-    "figure\n",
-    "plot(motion)\n",
-    "ylabel('deg/motion')\n",
-    "xlabel('TR')\n",
-    "cd .."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "This does a very quick check to see if our subject moved very much."
+    "If everything went well you should have files starting with ua* and a text file start with rp_ which has our motion\n"
    ]
   },
   {
@@ -246,14 +214,11 @@
     "\n",
     "Under other files select all other files that start with ua* from run 1.\n",
     "\n",
-    "As before save this batch file (coregistration.mat) and then run it\n",
-    "\n",
     "If it ran correctly you should see something like this:\n",
     "\n",
     "<img src=\"Images/Lab_02_Coregister.png\"></img>\n",
     "\n",
-    "\n",
-    "SPM created new coregistered files, that begin with and r"
+    "\n"
    ]
   },
   {
@@ -268,17 +233,11 @@
     "\n",
     "Click on Normalise (British English) then select Normalise (Est & Wri)\n",
     "\n",
-    "Select your anatomical scan (r) as your Image to Align\n",
+    "Select your anatomical scan as your Image to Align\n",
     "\n",
-<<<<<<< HEAD
-    "Select your bold rua files (456) as the Images to Write\n",
+    "Select your bold ua files (456) as the Images to Write\n",
     "\n",
     "Writing options: 2 2 2 -> 3 3 3"
-=======
-    "Select all of your bold rua files (456) as the Images to Write\n",
-    "\n",
-    "Writing options: change 2 2 2 to 3 3 3"
->>>>>>> 9fb1baa7de4cef9a805f6fdd7febf582bf11e381
    ]
   },
   {
@@ -291,11 +250,7 @@
     "\n",
     "Click on Smooth\n",
     "\n",
-<<<<<<< HEAD
     "Select your normalized files (w*,456)\n",
-=======
-    "Select your normalized files (w*,456 files)\n",
->>>>>>> 9fb1baa7de4cef9a805f6fdd7febf582bf11e381
     "\n",
     "The FWHM section wants to look like this: [8 8 8] \n",
     "\n",
@@ -310,20 +265,13 @@
    "source": [
     "# View your data again to see what has changed\n",
     "\n",
-    "Use Check Reg to see the differences in mean EPI across stages of preprocessing.\n",
+    "Use Check Reg to see the differences in mean EPI across steps.\n",
     "\n",
     "Use Check Reg to see the influence of normalization: between the regular T1 and wT1. Why does the normalized T1 look granier? \n",
     "\n",
     "Next compare each of these  to PBS60/jhuckins/avg305T1.nii, an average of 305 T1w images.\n",
     "\n"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {

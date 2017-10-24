@@ -1,0 +1,298 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Lab 02 Preprocessing\n",
+    "\n",
+    "\n",
+    "Today we are going to work on preprocessing 1 subject from the class data.\n",
+    "\n",
+    "We will do the following:\n",
+    "1. Check the data visually\n",
+    "2. Slice timing\n",
+    "3. Realign the functional runs\n",
+    "4. Coregistration\n",
+    "5. Normalization\n",
+    "6. Spatial smoothing\n",
+    "\n",
+    "First off we need to reconnect to the servers. \n",
+    "\n",
+    "Please login to hera or eros (which ever one you used last time. Once you have connected please open a new terminal window.\n",
+    "\n",
+    "If you need help doing this again please refer to Lab 01\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Once you are connected to hera or eros through VNC open a new terminal window within your VNC session."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Copy example subject to your folder\n",
+    "\n",
+    "To process the example subject we need to copy data to your folder\n",
+    "\n",
+    "From your home directory run the following command:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "cp: ../jhuckins/sub-sid000611/: No such file or directory\r\n"
+     ]
+    }
+   ],
+   "source": [
+    "cp -r ../jhuckins/sub-sid000611/ ./"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This will take a little while to copy as we are moving almost 500mb of data"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Start matlab and SPM12\n",
+    "\n",
+    "Please refer to Lab 01 on how to do this part\n",
+    "\n",
+    "<img src=\"Images/Lab_02_SPM.png\"></img>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# View your data\n",
+    "\n",
+    "Using the display button load the anatomical and each function run (one at a time) into SPM to view it using the Display button.\n",
+    "\n",
+    "<img src=\"Images/Lab_02_epi_view.png\"></img>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Use Check Reg to see if our anatomical and function runs are lined up\n",
+    "\n",
+    "Click on the Check Reg button in SPM and select our anatomical scan and one of the EPI runs.\n",
+    "\n",
+    "Click around in the viewing window to see different locations in the brain.\n",
+    "\n",
+    "Do the images look lined up? Why or why not?\n",
+    "\n",
+    "<img src=\"Images/Lab_02_CheckReg.png\"></img>\n",
+    "\n",
+    "Now do the same thing, just selecting the anatomical and the other EPI run."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Now lets start preprocessing our data\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Slice timing\n",
+    "\n",
+    "Each slice in our function volume are acquired at different times - here we are going to try to correct for that. \n",
+    "\n",
+    "Click on Slice timing and a Batch Editor window will pop up. This allows us to make a data processing pipeline.\n",
+    "\n",
+    "Under Data make 1 session and select the functional runs for this session (all 456 of them). \n",
+    "\n",
+    "We collected 40 slices for this experiment so enter that under # of slices.\n",
+    "\n",
+    "TR: We used a 2.5 second TR so enter that under the TR section\n",
+    "\n",
+    "TA: This is the time between the first and last slice in the scan. We can calculate this as follows: 2.5-(2.5/40)\n",
+    "\n",
+    "We collected our slices in an interleaved manner, meaning that we collected the even slices first then odd slices, ie we collect slice 2 then 4 then 6... then go back and collect slice 1 then 3 then 5... \n",
+    "\n",
+    "In the slice timing box please enter the following exactly as shown here:\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "SyntaxError",
+     "evalue": "invalid syntax (<ipython-input-2-04a8d8855a96>, line 1)",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-2-04a8d8855a96>\"\u001b[0;36m, line \u001b[0;32m1\u001b[0m\n\u001b[0;31m    [2:2:40 1:2:39]\u001b[0m\n\u001b[0m      ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+     ]
+    }
+   ],
+   "source": [
+    "[2:2:40 1:2:39]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The reference slice is the slice we are lining everything up to. For our purposes we will use slice 40 as it was acquired in roughly the middle of our TR\n",
+    "\n",
+    "Filename prefix: a\n",
+    "When SPM makes a new file it just adds and a to the fron to say that we did slice timing.\n",
+    "\n",
+    "You should have something that looks like this  when you are done:\n",
+    "<img src=\"Images/Lab_02_SliceTiming.png\"></img>\n",
+    "\n",
+    "Save the Batch Editor file in your directory as SliceTiming.mat then click the green run button.\n",
+    "\n",
+    "If everything went well you should have new files labeled a...\n",
+    "\n",
+    "If so you can close the batch editor"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Realignment\n",
+    "\n",
+    "Now we need to realign all of our images over time to account for any subject motion. \n",
+    "\n",
+    "Click on Realign then select the bottom option (Realign and Unwarp)\n",
+    "\n",
+    "A new Batch Editor window should show up.\n",
+    "\n",
+    "<img src=\"Images/Lab_02_Realign.png\"></img>\n",
+    "\n",
+    "Under Data create 1 session (each session is a run and we are only going to analyze 1 run today) and select your new files we have had slice timing correction done to them (a*) for each session \n",
+    "\n",
+    "All other standard options are fine. Save this Batch Editor file as Realignment.mat and run it.\n",
+    "\n",
+    "If everything went well you should have files starting with ua* and a text file start with rp_ which has our motion\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Coregistration\n",
+    "\n",
+    "Here we want to line the the functional and anatomical images.\n",
+    "\n",
+    "Click on Coregister then select the bottom option (Coregister (Est & Res))\n",
+    "\n",
+    "Our reference image wants to be the meanua* image from which is automatically created with realignment, this is just a mean of all of the volumes over time after slice timing and realignment. \n",
+    "\n",
+    "Select the anatomical image as the source image.\n",
+    "\n",
+    "Under other files select all other files that start with ua* from run 1.\n",
+    "\n",
+    "If it ran correctly you should see something like this:\n",
+    "\n",
+    "<img src=\"Images/Lab_02_Coregister.png\"></img>\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Normalization\n",
+    "\n",
+    "Now that all of our images are lined up we are going to squish these images into MNI template space. \n",
+    "\n",
+    "For more information about templates see: http://www.nil.wustl.edu/labs/kevin/man/answers/mnispace.html\n",
+    "\n",
+    "Click on Normalise (British English) then select Normalise (Est & Wri)\n",
+    "\n",
+    "Select your anatomical scan as your Image to Align\n",
+    "\n",
+    "Select your bold ua files (456) as the Images to Write\n",
+    "\n",
+    "Writing options: 2 2 2 -> 3 3 3"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Smoothing\n",
+    "\n",
+    "Our final preprocessing step for today is to do smoothing and we will use an 8mm FWHM kernel. \n",
+    "\n",
+    "Click on Smooth\n",
+    "\n",
+    "Select your normalized files (w*,456)\n",
+    "\n",
+    "The FWHM section wants to look like this: [8 8 8] \n",
+    "\n",
+    "We are using a large kernel so we can see visual changes in the data. \n",
+    "\n",
+    "For the class project we will use a smaller smoothing kernel.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# View your data again to see what has changed\n",
+    "\n",
+    "Use Check Reg to see the differences in mean EPI across steps.\n",
+    "\n",
+    "Use Check Reg to see the influence of normalization: between the regular T1 and wT1. Why does the normalized T1 look granier? \n",
+    "\n",
+    "Next compare each of these  to PBS60/jhuckins/avg305T1.nii, an average of 305 T1w images.\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.2"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
